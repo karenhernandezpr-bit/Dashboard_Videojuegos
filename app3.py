@@ -208,13 +208,17 @@ st.info("""
 **Mejor uso:** Análisis retrospectivo y comprensión de factores históricos de éxito.
 """)
 
+import gzip
+
 @st.cache_resource
 def cargar_modelo():
     try:
-        with open("modelo_entrenado.pkl", "rb") as f:
+        with gzip.open("modelo_entrenado.pkl.gz", "rb") as f:
             return pickle.load(f)
-    except:
+    except Exception as e:
+        st.error(f"Error cargando modelo: {e}")
         return None
+
 
 modelo_data = cargar_modelo()
 
